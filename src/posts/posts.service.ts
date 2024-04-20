@@ -11,7 +11,7 @@ export class PostsService {
     if (!trimmedTitle) throw new BadRequestException('Title cannot be empty.');
 
     const newPost = {
-      name: trimmedTitle,
+      title: trimmedTitle,
       ...createPostDto,
     };
 
@@ -38,7 +38,7 @@ export class PostsService {
     if (!trimmedTitle) throw new BadRequestException('Name cannot be empty.');
 
     const updatedPost = {
-      name: trimmedTitle,
+      title: trimmedTitle,
       ...updateUserDto,
     };
 
