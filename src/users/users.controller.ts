@@ -7,11 +7,13 @@ import {
   Param,
   Delete,
   Ip,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Prisma } from '@prisma/client';
 import { Throttle, SkipThrottle } from '@nestjs/throttler';
 import { MyLoggerService } from 'src/my-logger/my-logger.service';
+import { JwtGuard } from 'src/auth/guards/jwt.guard';
 
 @SkipThrottle()
 @Controller('users')
@@ -32,6 +34,7 @@ export class UsersController {
   }
 
   @Throttle({ short: { ttl: 1000, limit: 1 } })
+  @UseGuards(JwtGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(+id);

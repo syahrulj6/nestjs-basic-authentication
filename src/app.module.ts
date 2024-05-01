@@ -9,9 +9,13 @@ import { MyLoggerModule } from './my-logger/my-logger.module';
 import { UsersModule } from './users/users.module';
 import { PostsModule } from './posts/posts.module';
 import { ProfileModule } from './profile/profile.module';
+import { AuthModule } from './auth/auth.module';
+import { DatabaseService } from './database/database.service';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     PostsModule,
     UsersModule,
     DatabaseModule,
@@ -31,10 +35,12 @@ import { ProfileModule } from './profile/profile.module';
     MyLoggerModule,
     PostsModule,
     ProfileModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [
     AppService,
+    DatabaseService,
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,

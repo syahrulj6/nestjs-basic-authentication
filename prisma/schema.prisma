@@ -29,6 +29,7 @@ model User {
   name          String
   posts         Post[]
   profile       Profile?
+  password      String
 }
 
 model Profile {

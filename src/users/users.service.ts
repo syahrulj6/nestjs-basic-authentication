@@ -1,6 +1,11 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+} from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { DatabaseService } from 'src/database/database.service';
+import { hash } from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -8,15 +13,32 @@ export class UsersService {
   async create(createUserDto: Prisma.UserCreateInput) {
     const trimmedName = createUserDto.name.toString().trim();
 
+    const user = await this.databaseService.user.findUnique({
+      where: {
+        email: createUserDto.email,
+      },
+    });
+
+    if (user) throw new ConflictException('email duplicated');
+
     if (!trimmedName) throw new BadRequestException('Name cannot be empty.');
 
-    const newUser = {
-      name: trimmedName,
-      ...createUserDto,
-    };
+    const newUser = await this.databaseService.user.create({
+      data: {
+        ...createUserDto,
+        password: await hash(createUserDto.password, 10),
+      },
+    });
 
-    return this.databaseService.user.create({
-      data: newUser,
+    const { password, ...result } = newUser;
+    return result;
+  }
+
+  async findByEmail(email: string) {
+    return await this.databaseService.user.findUnique({
+      where: {
+        email,
+      },
     });
   }
 
