@@ -21,18 +21,25 @@ export class PostsService {
   }
 
   async findAll() {
-    return this.databaseService.post.findMany();
-  }
-
-  async findOne(id: number) {
-    return this.databaseService.post.findUnique({
-      where: {
-        id,
+    return this.databaseService.post.findMany({
+      include: {
+        author: true,
       },
     });
   }
 
-  async update(id: number, updateUserDto: Prisma.PostUpdateInput) {
+  async findOne(id: string) {
+    return this.databaseService.post.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        author: true,
+      },
+    });
+  }
+
+  async update(id: string, updateUserDto: Prisma.PostUpdateInput) {
     const trimmedTitle = updateUserDto.title.toString().trim();
 
     if (!trimmedTitle) throw new BadRequestException('Name cannot be empty.');
@@ -50,7 +57,7 @@ export class PostsService {
     });
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     return this.databaseService.post.delete({
       where: {
         id,

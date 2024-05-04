@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DatabaseModule } from './database/database.module';
-import { EmployeesModule } from './employees/employees.module';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { MyLoggerModule } from './my-logger/my-logger.module';
@@ -19,7 +18,6 @@ import { ConfigModule } from '@nestjs/config';
     PostsModule,
     UsersModule,
     DatabaseModule,
-    EmployeesModule,
     ThrottlerModule.forRoot([
       {
         name: 'short',

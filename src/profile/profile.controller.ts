@@ -34,7 +34,7 @@ export class ProfileController {
   @Throttle({ short: { ttl: 1000, limit: 1 } })
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.profileService.findOne(+id);
+    return this.profileService.findOne(id);
   }
 
   @Patch(':id')
@@ -42,11 +42,11 @@ export class ProfileController {
     @Param('id') id: string,
     @Body() updateProfileDto: Prisma.PostUpdateInput,
   ) {
-    return this.profileService.update(+id, updateProfileDto);
+    return this.profileService.update(id, updateProfileDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.profileService.remove(+id);
+    return this.profileService.remove(id);
   }
 }

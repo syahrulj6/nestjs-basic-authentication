@@ -24,7 +24,7 @@ export class ProfileService {
     return this.databaseService.profile.findMany();
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     return this.databaseService.profile.findUnique({
       where: {
         id,
@@ -32,7 +32,7 @@ export class ProfileService {
     });
   }
 
-  async update(id: number, updateUserDto: Prisma.PostUpdateInput) {
+  async update(id: string, updateUserDto: Prisma.PostUpdateInput) {
     const trimmedBio = updateUserDto.title.toString().trim();
 
     if (!trimmedBio) throw new BadRequestException('Name cannot be empty.');
@@ -50,7 +50,7 @@ export class ProfileService {
     });
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     return this.databaseService.profile.delete({
       where: {
         id,

@@ -16,7 +16,7 @@ import { MyLoggerService } from 'src/my-logger/my-logger.service';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 
 @SkipThrottle()
-@Controller('users')
+@Controller('user')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
   private readonly logger = new MyLoggerService(UsersController.name);
@@ -37,7 +37,7 @@ export class UsersController {
   @UseGuards(JwtGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+    return this.usersService.findOne(id);
   }
 
   @Patch(':id')
@@ -45,11 +45,11 @@ export class UsersController {
     @Param('id') id: string,
     @Body() updateUserDto: Prisma.UserUpdateInput,
   ) {
-    return this.usersService.update(+id, updateUserDto);
+    return this.usersService.update(id, updateUserDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
+    return this.usersService.remove(id);
   }
 }

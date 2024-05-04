@@ -14,7 +14,7 @@ import { Throttle, SkipThrottle } from '@nestjs/throttler';
 import { MyLoggerService } from 'src/my-logger/my-logger.service';
 
 @SkipThrottle()
-@Controller('posts')
+@Controller('post')
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
   private readonly logger = new MyLoggerService(PostsController.name);
@@ -27,14 +27,14 @@ export class PostsController {
   @SkipThrottle({ default: false })
   @Get()
   findAll(@Ip() ip: string) {
-    this.logger.log(`Request for all Users\t${ip}`);
+    this.logger.log(`Request for all Posts\t${ip}`);
     return this.postsService.findAll();
   }
 
   @Throttle({ short: { ttl: 1000, limit: 1 } })
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.postsService.findOne(+id);
+    return this.postsService.findOne(id);
   }
 
   @Patch(':id')
@@ -42,11 +42,11 @@ export class PostsController {
     @Param('id') id: string,
     @Body() updatePostDto: Prisma.PostUpdateInput,
   ) {
-    return this.postsService.update(+id, updatePostDto);
+    return this.postsService.update(id, updatePostDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.postsService.remove(+id);
+    return this.postsService.remove(id);
   }
 }
