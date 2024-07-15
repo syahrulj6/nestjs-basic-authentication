@@ -14,7 +14,7 @@ import { Throttle, SkipThrottle } from '@nestjs/throttler';
 import { MyLoggerService } from 'src/my-logger/my-logger.service';
 
 @SkipThrottle()
-@Controller('post')
+@Controller('posts')
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
   private readonly logger = new MyLoggerService(PostsController.name);

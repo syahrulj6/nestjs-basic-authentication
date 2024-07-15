@@ -16,7 +16,7 @@ import { MyLoggerService } from 'src/my-logger/my-logger.service';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 
 @SkipThrottle()
-@Controller('user')
+@Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
   private readonly logger = new MyLoggerService(UsersController.name);

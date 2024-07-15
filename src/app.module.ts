@@ -11,6 +11,7 @@ import { ProfileModule } from './profile/profile.module';
 import { AuthModule } from './auth/auth.module';
 import { DatabaseService } from './database/database.service';
 import { ConfigModule } from '@nestjs/config';
+import { BioModule } from './bio/bio.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ConfigModule } from '@nestjs/config';
     PostsModule,
     UsersModule,
     DatabaseModule,
+    BioModule,
     ThrottlerModule.forRoot([
       {
         name: 'short',
@@ -34,6 +36,7 @@ import { ConfigModule } from '@nestjs/config';
     PostsModule,
     ProfileModule,
     AuthModule,
+    BioModule,
   ],
   controllers: [AppController],
   providers: [

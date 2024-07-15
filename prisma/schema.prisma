@@ -13,21 +13,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
 model User {
   id            String @id @default(cuid())
   email         String @unique
   name          String
+  onboarded     Boolean @default(false)
   posts         Post[]
   profile       Profile?
-  role          Role?
+  isAdmin       Boolean @default(false)
   password      String
 }
 
 model Profile {
   id            String @id @default(cuid())
   bio           String
+  image         String
+  game          Game?
+  username      String
+  gameId        String
   user          User @relation(fields: [userId], references: [id])
   userId        String @unique
 }
@@ -41,8 +44,7 @@ model Post {
   authorId      String
 }
 
-
-enum Role {
-  USER
-  ADMIN
+enum Game {
+  VALORANT
+  MOBILE_LEGENDS
 }
